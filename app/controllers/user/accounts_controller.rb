@@ -32,6 +32,18 @@ class User::AccountsController < ApplicationController
     end
   end
 
+def manage_password
+    authorize! :edit, @user, current_circle
+    outcome =  User::UpdatePassword.run({user: @user}, params)
+    if outcome.success?
+      redirect_to circle_member_url(current_circle, @user), notice: t("users.flash.password_reset_success")
+    else
+      @errors = outcome.errors
+      render :change_password
+    end
+end
+
+
   helper_method def current_circle
     if current_user.present?
       if session[:circle_id].present?

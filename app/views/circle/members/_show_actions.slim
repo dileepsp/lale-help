@@ -22,9 +22,14 @@
   - if can?(:edit, presenter.model, circle)
     = link_to edit_circle_member_path(circle, presenter.model) do
       button.button-primary = t('helpers.edit_no_model')
-
+  
+  - if can?(:change_password, presenter.model, circle)
     = link_to account_change_password_path(presenter.model) do
       button.button = t('.change_password')
+
+  - if can?(:manage_password, presenter.model, circle)
+    = link_to account_manage_password_path(presenter.model) do
+      button.button = t('.reset_password')
 
 
 

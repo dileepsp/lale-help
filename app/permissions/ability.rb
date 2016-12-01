@@ -100,6 +100,14 @@ class Ability
       can?(:manage, circle) && (member != user) && !circle.has_active_user?(member)
     end
 
+    can :change_password, User do |member, circle|
+      (member == user)
+    end
+
+    can :manage_password, User do |member, circle|
+      can?(:manage, circle) && (member != user)
+    end
+
     #
     # Working Groups
     #

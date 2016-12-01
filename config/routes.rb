@@ -93,7 +93,7 @@ Rails.application.routes.draw do
   scope module: "user" do
     # FIXME none of the resource actions may be needed anymore.
     resources :accounts do
-      get :change_password, :switch_circle
+      get :change_password, :switch_circle, :manage_password
       patch :update_password
     end
   end

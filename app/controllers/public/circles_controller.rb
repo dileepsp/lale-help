@@ -1,4 +1,5 @@
 class Public::CirclesController < ApplicationController
+  require 
   layout 'public'
   skip_authorization_check
   before_action :ensure_logged_in
@@ -24,6 +25,7 @@ class Public::CirclesController < ApplicationController
   end
 
   def create
+
     @form = Circle::CreateForm.new params[:circle], user: current_user
     outcome = @form.submit
     if outcome.success?
