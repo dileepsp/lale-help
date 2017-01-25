@@ -30,9 +30,13 @@ class User < ActiveRecord::Base
 
   has_many :comments_made, class_name: Comment, inverse_of: :commenter, foreign_key: 'commenter_id', dependent: :destroy
 
-  enum language: [:en, :de, :fr]
+  enum language: { de: 1, en: 0, fr: 2 }
+
+  scope :asc_order, -> { order(:last_name) }
 
   alias_attribute :active_since, :created_at
+
+  attachment :profile_image # uses refile
 
   class << self
 
@@ -58,6 +62,10 @@ class User < ActiveRecord::Base
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def list_name
+    "#{last_name}, #{first_name}"
   end
 
   def email

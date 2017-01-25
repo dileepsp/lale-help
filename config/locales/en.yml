@@ -324,12 +324,11 @@
         :country: Country
         :email: Email
         :feedback: Feedback
-        :first_name: First name
+        :first_name: First Name
         :home_phone: Home Phone
         :identities: Identities
         :language: Language
         :last_login: Last Login
-        :last_name: Last name
         :location: :activerecord.models.location
         :mobile_phone: Mobile Phone
         :name: Name
@@ -345,6 +344,8 @@
         :tasks: Tasks
         :triggered_system_events: Triggered system events
         :working_groups: Working Groups
+        :profile_image: Profile Image
+        :remove_profile_image: No image
       :user/feedback:
         :comment: Comment
         :rating: Rating
@@ -398,6 +399,9 @@
       :system_event: System event
       :system_event/notification: System event/notification
       :system_event/notification/delivery: System event/notification/delivery
+      :comment:
+        :one: Comment
+        :other: Comments
       :task:
         :one: Task
         :other: Tasks
@@ -559,7 +563,7 @@
       :list:
         :no_projects: No projects found.
       :nav:
-        :info: Info
+        :stats: Statistics
       :show:
         :admin-title:
           :one: "%{count} organizer"
@@ -571,7 +575,8 @@
         :member-title:
           :one: "%{count} volunteer"
           :other: "%{count} volunteers"
-        :organized-by: Organized by %{name}
+        :organized-by: Organized by
+        :in_working_group: in
         :settings: Settings
         :title_complete: 'Done: '
         :working_group_link: in %{link}
@@ -590,8 +595,6 @@
         :header: Supplies
       :list:
         :no-supplies: No supplies are needed at this time.
-      :list_item:
-        :stats-here: Stats Here
       :new:
         :back: Back to All Supplies
       :show:
@@ -601,6 +604,7 @@
         :edit-task-button: Edit Supply
         :invite-button: Invite %{group} members
         :organized-by: Organized by %{name}
+        :in_working_group: in
         :reopen-task-button: Re-open Supply
         :users_box_title: Is supplied by
         :volunteer-count:
@@ -641,8 +645,6 @@
         :header: All Tasks
       :list:
         :no-tasks: No tasks found.
-      :list_item:
-        :stats-here: Stats
       :my:
         :header: My Tasks
         :organizer-header: Organizing
@@ -657,6 +659,7 @@
         :edit-task-button: Edit Task
         :invite-button: Invite %{class}
         :organized-by: Organized by %{name}
+        :in_working_group: in
         :reopen-task-button: Re-open Task
         :volunteer-count:
           :one: "%{count} volunteer is going"
@@ -858,6 +861,8 @@
   :edit: EDIT
   :error_correction: Please correct the errors below.
   :errors:
+    :profile_image:
+      :size: Please choose an image smaller than %{max_size}MB.
     :about_me:
       :too_long: maximum 300 characters
     :accept_terms:
@@ -1013,6 +1018,7 @@
   :formtastic:
     :reset: Reset %{model}
   :helpers:
+    :add: Add %{model}
     :assign: Assign helpers
     :assigning: Assigning &hellip;
     :block: Block
@@ -1020,6 +1026,7 @@
     :complete: Complete %{model}
     :confirm:
       :project:
+        :complete: This project still has open tasks or supplies. Do you really want to close them all as well?
         :delete: Really delete this project and all it's tasks?
       :supply:
         :delete: Are you sure you want to delete this supply?

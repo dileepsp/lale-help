@@ -319,6 +319,8 @@
         :tasks: Tâches
         :triggered_system_events: Alerte Système
         :working_groups: Groupes
+        :profile_image: Photo du profil
+        :remove_profile_image: Pas de photo
       :user/feedback:
         :comment: Commentaire
         :rating: Evaluation
@@ -533,7 +535,7 @@
       :list:
         :no_projects: Pas de projets.
       :nav:
-        :info: Info
+        :stats: Statistiques
       :show:
         :admin-title:
           :one: "%{count} organisateur"
@@ -545,7 +547,8 @@
         :member-title:
           :one: "%{count} volontaire"
           :other: "%{count} volontaires"
-        :organized-by: Organisé par %{name}
+        :organized-by: Organisé par
+        :in_working_group: en
         :settings: Paramètres
         :title_complete: 'Complété :'
         :working_group_link: en %{link}
@@ -564,8 +567,6 @@
         :header: Besoins Matériels
       :list:
         :no-supplies: Aucun besoin particulier en ce moment.
-      :list_item:
-        :stats-here: Statistiques
       :new:
         :back: Retour aux Besoins
       :show:
@@ -575,6 +576,7 @@
         :edit-task-button: Editer ce Besoin
         :invite-button: Inviter les membres de %{group}
         :organized-by: Organisé par %{name}
+        :in_working_group: en
         :reopen-task-button: Re-ouvrir la Fourniture
         :users_box_title: Est fournie par
         :volunteer-count:
@@ -615,8 +617,6 @@
         :header: Toutes les Tâches
       :list:
         :no-tasks: Aucune tâche trouvée.
-      :list_item:
-        :stats-here: Les Statistiques vont ici
       :my:
         :header: Mes Tâches
         :organizer-header: Organise
@@ -631,6 +631,7 @@
         :edit-task-button: Editer la Tâche
         :invite-button: Inviter %{class}
         :organized-by: Organisé par %{name}
+        :in_working_group: en
         :reopen-task-button: Re-Ouvrir la Tâche
         :volunteer-count:
           :one: "%{count} volontaire y participe"
@@ -991,6 +992,7 @@
     :update: Modifier ce(tte) %{model}
     :yes: Oui
   :helpers:
+    :add: Créer %{model}
     :assign: Attribuer des volontaires
     :assigning: Attribuer hellip;
     :block: Bloquer

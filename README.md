@@ -6,7 +6,7 @@ This is the rails application used for lale.help.
 
 # Table of contents
 
-<!-- MarkdownTOC depth=2 autolink=true bracket=round -->
+<!-- MarkdownTOC depth=1 autolink=true bracket=round -->
 
 - [Development hints for docker](#development-hints-for-docker)
 - [URLs](#urls)
@@ -15,6 +15,8 @@ This is the rails application used for lale.help.
 - [Advice for writing feature specs](#advice-for-writing-feature-specs)
 - [Styleguide](#styleguide)
 - [Environments and deployment](#environments-and-deployment)
+- [Queue for asyncronous processing](#queue-for-asyncronous-processing)
+- [Access to the logs](#access-to-the-logs)
 - [Further documentation](#further-documentation)
 - [License](#license)
 
@@ -62,6 +64,12 @@ the hood to start the rails application
 | Stop all services                          | `./docker/stop`                       |
 | Rebuild the web container                  | `./docker/build`                      |
 | Reset your Docker environment              | `./docker/reset`                      |
+
+### Adding icons to the lale iconfont
+
+We use a custom font to combine our icons into one file, in order to save bandwith and HTTP requests. The icons are stored in `app/assets/icons` and need to be in SVG format, the (generated) font files are in `app/assets/fonts/lale/lale.*. 
+
+Run the command `fontcustom compile` to update the font file after changing anything in the icons directory. The [fontcustom gem](https://github.com/FontCustom/fontcustom/) and it's dependencies [need to be installed first](https://github.com/FontCustom/fontcustom/#installation). See the configuration file [config/fontcustom.yml](config/fontcustom.yml) for details.
 
 ### Adding JavaScript packages / dependencies
 
@@ -115,7 +123,7 @@ Some advice:
 
 * be aware not to build one sentence from several smaller translations, because that hard-codes a certain sentence structure, which may not be the same in every language. Always translate complete sentences, or at least ensure that words of a sentence can be in arbitrary order.
 
-* don't pluralize words in Ruby code, as pluralization rules can be different. Slavic languages have two plural forms, for example: the word "apples" will be differnt in "two apples" and "five apples". Rails i18n can handle that with it's built in [i18n rules](https://goo.gl/BGY6KC) if you take advantage of the feature (pass `count: number` to `I18n.t`).
+* don't pluralize words in Ruby code, as pluralization rules can be different. Slavic languages have two plural forms, for example: the word "apples" will be different in "two apples" and "five apples". Rails i18n can handle that with it's built in [i18n rules](https://goo.gl/BGY6KC) if you take advantage of the feature (pass `count: number` to `I18n.t`).
 
 ## Restoring the database from a snapshot
 
@@ -400,7 +408,20 @@ Do a new release when production is released, or when requested.
 
 Do a new release when requested.
 
-Deploy 
+## Queue for asyncronous processing
+
+lale uses a queue system to process long-running tasks outside of the web request, so the web request can be returned quickly. At the time of writing only emails are processed via queue, but this can be extended. It is implemented with the [sidekiq gem](https://github.com/mperham/sidekiq) (we use the free version).
+
+Sidekiq uses [Redis](http://redis.io) as it's storage mechanism, but Redis could be used for other purposes as well. Just be aware that we are on the free plan of Redis Cloud which only comes with 30MB memory. Redis is configured to evicts the least recently used keys when the 30MB are full (allkeys-lru), despite being advised against it [in the sidekiq documentation](https://github.com/mperham/sidekiq/wiki/Using-Redis#memory). In a brief test with a full Redis store, the queue still behaved as expected.
+
+You can use Sidekiq's admin interface at ([/sidekiq](http://app.lale.help/sidekiq)) to observe and debug the queue(s).
+
+ActiveJob is currently not configured. It worked for sending emails as well, but the messages and the non-default "mailers" queue didn't show up in Sidekiq's admin interface, so I chose to go with Sidekiq's default delaying mechanism.
+
+## Access to the logs
+
+All logs can be accessed with the `heroku logs` shell command. It will only print the last 1.500 lines or so. To access, filter and analyze older logs, use the Papertrail Add-On through heroku's web interface.
+
 ## Further documentation
 
 ... can be found on [the wiki](https://github.com/lale-help/lale-help/wiki)
